@@ -11,7 +11,7 @@ export default class Player {
         let isInside = true;
         isInside &= 0 <= this.i + dir.deltaI && this.i + dir.deltaI <= n;
         isInside &= 0 <= this.j + dir.deltaJ && this.j + dir.deltaJ <= m;
-        
+
         if (isInside) {
             this.i += dir.deltaI
             this.j += dir.deltaJ;
@@ -30,5 +30,14 @@ export default class Player {
     draw(p5context, cells, color) {
         const { i, j } = this;
         cells[i][j].highlight(p5context, color);
+    }
+
+    updateCoinsLogic(cells, coins) {
+        const { i, j } = this;
+        if (cells[i][j].hasCoin) {
+            cells[i][j].hasCoin = false;
+            coins++;
+        }
+        return coins;
     }
 }

@@ -16,21 +16,27 @@
         <span>
             <p>Here you should rezolve the maze using your eyes.</p>
             <p>The screen is divided into 4 dials separated by the diagonals.</p>
-            <p>If you are looking in the top dial the player(which is the green square) will move up(similar for other
+            <p>If you are looking in the top dial(dial 0) the player(which is the green square) will move up(similar for other
                 dials).</p>
             <p>You will start from the top-left corner and you shuld arrive in the bottom-right corner.</p>
             <p>The red dot indicates the aproximative position where you are looking.</p>
             <p>To calibrate the eye-tracking system you should click(make sure to click in a wide area(target the
                 corners)) while looking at the cursor.</p>
             <p>You should look 500ms at one dial to move in the respective direction.</p>
-            <img src="./imgs/helpimg.JPG" alt="error while loading img!" width="500" height="300">
+            <p>The time it takes to finish the labirint is measured!</p>
+            <p>Each coin reduce that time with 2000ms.</p>
+            <p>The labirint has minimum 1 monster. The monster(s) will try to eat you so run.</p>
+            <p>The image below should clarify all(dials and their numbers are with red)</p>
+            <p style="color: red;">PS:Sometimes the maze is not fully generated(so you can't finish it), pls refresh the page.</p>
+            <img src="./imgs/help.JPG" alt="error while loading img!" width="500" height="300">
+            <hr />
             <form id="size-setter" action="">
                 <label for="dificulty">maze dificulty:</label>
                 <select name="dims" id="dims">
                     <option value="10">easy</option>
                     <option value="15">normal</option>
                     <option value="20">hard</option>
-                    <option value="25">insane</option>
+                    <option value="30">insane</option>
                 </select>
                 <br><br>
                 <input type="submit" value="Submit">
