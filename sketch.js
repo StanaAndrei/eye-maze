@@ -225,7 +225,7 @@ const initP5 = p5context => {
         if (!globalVars.DEBUG && !wginit) {
             webgazer.begin();
             wginit = true;
-            globalVars.MONSTERS_UPDATE_INT = 25
+            globalVars.MONSTERS_UPDATE_INT = 35;
         }
 
         if (!startTime) {
