@@ -4,6 +4,7 @@ import Cell from "./cell.js";
 import Player from "./player.js";
 import Monster from "./monster.js";
 import { getDial } from "./geometry.js";
+import { removeWalls, getNeighbour } from "./mk-maze-utils.js";
 let cells;
 let stack = [];
 let currCell;
@@ -16,55 +17,8 @@ let coins = 0;
 let monsters = new Array(3).fill(null);
 let eaten = false;
 
-const getNeighbour = ({ i, j }, p5context) => {
-    let neighbours = [];
-    const top = cells[i - 1]?.[j];
-    const bottom = cells[i + 1]?.[j];
-    const left = cells[i]?.[j - 1];
-    const right = cells[i]?.[j + 1];
-
-    if (top?.vis !== globalVars.MAX_VIS) {
-        neighbours.push(top);
-    }
-    if (bottom?.vis !== globalVars.MAX_VIS) {
-        neighbours.push(bottom);
-    }
-    if (left?.vis !== globalVars.MAX_VIS) {
-        neighbours.push(left);
-    }
-    if (right?.vis !== globalVars.MAX_VIS) {
-        neighbours.push(right);
-    }
-
-    if (neighbours.length) {
-        const rp = p5context.floor(p5context.random(0, neighbours.length));
-        return neighbours[rp];
-    }
-    return null;
-}
-
-const removeWalls = (cell1, cell2) => {
-    if (Math.abs(cell1.i - cell2.i) > 1 || Math.abs(cell1.i - cell2.i) > 1) {
-        throw new Error('PARAM EXE!');
-    }
-
-    const diffI = cell1.i - cell2.i;
-    if (diffI === 1) {
-        cell1.walls[0] = false;
-        cell2.walls[2] = false;
-    } else if (diffI === -1) {
-        cell1.walls[2] = false;
-        cell2.walls[0] = false;
-    }
-
-    const diffJ = cell1.j - cell2.j;
-    if (diffJ === 1) {
-        cell1.walls[3] = false;
-        cell2.walls[1] = false;
-    } else if (diffJ === -1) {
-        cell1.walls[1] = false;
-        cell2.walls[3] = false;
-    }
+const genMaze = () => {
+    
 }
 
 const initP5 = p5context => {
@@ -88,9 +42,9 @@ const initP5 = p5context => {
         currCell = cells[0][0];
         currCell.vis++;
         player = new Player(0, 0);
-        if (globalVars.n > 15) monsters[0] = new Monster(0, globalVars.m - 1);
-        if (globalVars.n > 10) monsters[1] = new Monster(globalVars.n - 1, 0);
-        monsters[2] = new Monster(globalVars.n - 1, globalVars.m - 1);
+        if (globalVars.n > 10) monsters[0] = new Monster(0, globalVars.m - 1);
+        if (globalVars.n > 20) monsters[1] = new Monster(globalVars.n - 1, 0);
+        if (globalVars.n > 25) monsters[2] = new Monster(globalVars.n - 1, globalVars.m - 1);
     }
     p5context.draw = async () => {
         if (eaten) {
@@ -114,8 +68,8 @@ const initP5 = p5context => {
         //#endregion
         //#region dfs
         if (!genFinished) {
-            currCell.highlight(p5context, 'purple');
-            const nextCell = getNeighbour(currCell, p5context);
+            currCell.highlight(p5context, 'red');
+            const nextCell = getNeighbour(currCell, p5context, cells);
             if (nextCell) {
                 nextCell.vis++;
                 nrVis++;
@@ -152,7 +106,6 @@ const initP5 = p5context => {
                 return;
             }
         }
-
         //#endregion
         //#region player
         p5context.textSize(25);
@@ -162,7 +115,6 @@ const initP5 = p5context => {
         if (!genFinished) {
             return;
         }
-        //console.log(globalVars.MONSTERS_UPDATE_INT);
         //#endregion
         //#region check cells
         if (cells[globalVars.n - 1][0].vis === 0) {
