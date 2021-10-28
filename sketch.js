@@ -86,9 +86,7 @@ export default function initP5(p5context) {
                 }
             }
             if (player.i === globalVars.n - 1 && player.j === globalVars.m - 1) {
-                p5context.textSize(50);
-                p5context.fill('CYAN');
-                p5context.text(`YOU WON!\n(${timeElapsed}ms)`, p5context.width / 2 - 200, p5context.height / 2);
+                Writer.writeWon(p5context, timeElapsed);
                 p5context.noLoop();
                 return;
             }
