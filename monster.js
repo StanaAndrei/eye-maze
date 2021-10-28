@@ -1,15 +1,12 @@
 import globalVars from "./globalVars.js";
 import Queue from "./libs/queue.js";
+import isInside from "./is-inside.js";
 const dirs = [
     { i: 1, j: 0 },
     { i: -1, j: 0 },
     { i: 0, j: 1 },
     { i: 0, j: -1 },
 ];
-
-const isInside = (i, j, n, m) => {
-    return 0 <= i && i < n && 0 <= j && j < m;
-}
 
 const getTheWall = (dirI, dirJ) => {
     if (dirI === -1) {
