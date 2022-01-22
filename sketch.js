@@ -20,7 +20,7 @@ let poses = [], posesIt = 1;
 export default function initP5(p5context) {
     p5context.setup = () => {
         globalVars.DEBUG = (new URLSearchParams(window.location.search)).has('debug');
-        const startX = globalVars.DEBUG ? 0 : 340;
+        const startX = globalVars.DEBUG || localStorage.keybd === 'true' ? 0 : 340;
         p5context.frameRate(60);
         let canvas = p5context.createCanvas(window.innerWidth, window.innerHeight);
         canvas.position(startX, 0, 'fixed');
@@ -96,10 +96,14 @@ export default function initP5(p5context) {
             return;
         }
         //init wg
-        if (!globalVars.DEBUG && !wginit) {
+        if (!globalVars.DEBUG && localStorage.keybd !== 'true' && !wginit) {
             webgazer.begin();
             wginit = true;
             globalVars.MONSTERS_UPDATE_INT = 35;
+        }
+
+        if (localStorage.keybd === 'true') {
+            globalVars.MONSTERS_UPDATE_INT = 15;
         }
 
         if (!startTime) {
@@ -107,7 +111,7 @@ export default function initP5(p5context) {
         }
 
         let dial;
-        if (!globalVars.DEBUG) {
+        if (!globalVars.DEBUG && localStorage.keybd !== 'true') {
             const prediction = await webgazer.getCurrentPrediction();
             if (prediction) {
                 let { x: eyeX, y: eyeY } = prediction;
@@ -116,7 +120,7 @@ export default function initP5(p5context) {
                 //console.log(eyeX, eyeY);
                 dial = getDial(eyeX, eyeY, p5context);
             }
-        } else {
+        } else if (globalVars.DEBUG) {
             const { mouseX, mouseY } = p5context;
             dial = getDial(mouseX, mouseY, p5context);
         }
@@ -133,5 +137,29 @@ export default function initP5(p5context) {
         }//*/
         handleMovement(dial, player, cells);
         lastDial = -1;
+    }
+
+    p5context.keyPressed = () => {
+        const canUseKb = localStorage.keybd === 'true' && !globalVars.DEBUG;
+        if (!canUseKb) {
+            return;
+        }
+
+        const {
+            LEFT_ARROW,
+            RIGHT_ARROW,
+            UP_ARROW,
+            DOWN_ARROW
+        } = p5context;
+
+        if (p5context.keyCode === UP_ARROW) {
+            handleMovement(0, player, cells);
+        } else if (p5context.keyCode === RIGHT_ARROW) {
+            handleMovement(1, player, cells);
+        } else if (p5context.keyCode === DOWN_ARROW) {
+            handleMovement(2, player, cells);
+        } else if (p5context.keyCode === LEFT_ARROW) {
+            handleMovement(3, player, cells);
+        }
     }
 }

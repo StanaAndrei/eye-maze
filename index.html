@@ -42,6 +42,11 @@
                 <br><br>
                 <input type="submit" value="Submit">
             </form>
+            <hr>
+            <div>Wanna play the maze in classic way(without eyes, but with arrwos)?
+                click <button id="switch-modes">here</button> to switch modes!</div>
+            <div id="curr-mode"></div>
+            <i style="color: red;">WARNING: in classic mode monsters are faster!</i>
         </span>
     </div>
 </body>
@@ -58,6 +63,10 @@
 
     #maze-area {
         display: none;
+    }
+
+    span#curr-mode-val {
+        color: green;
     }
 </style>
 
