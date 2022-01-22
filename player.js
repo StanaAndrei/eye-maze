@@ -1,3 +1,5 @@
+import globalVars from "./globalVars.js";
+
 export default class Player {
     constructor(i, j) {
         this.i = i;
@@ -29,7 +31,7 @@ export default class Player {
 
     draw(p5context, cells, color) {
         const { i, j } = this;
-        cells[i][j].highlight(p5context, color);
+        cells[i][j].highlight(p5context, globalVars.PLAYER_IMG);
     }
 
     updateCoinsLogic(cells, coins) {

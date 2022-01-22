@@ -31,7 +31,7 @@ export default class Monster {
 
     draw(p5context, cells) {
         const { i, j } = this;
-        cells[i][j].highlight(p5context, p5context.color(216, 25, 230, 200));
+        cells[i][j].highlight(p5context, globalVars.MONSTER_GIF);
     }
 
     move(player, cells) {

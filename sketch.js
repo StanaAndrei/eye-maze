@@ -18,6 +18,12 @@ let eaten = false;
 let poses = [], posesIt = 1;
 
 export default function initP5(p5context) {
+    p5context.preload = () => {
+        globalVars.MINER_IMG = p5context.loadImage(globalVars.MINER_IMG_ADR)
+        globalVars.MONSTER_GIF = p5context.loadImage(globalVars.MONSTER_GIF_ADR);
+        globalVars.PLAYER_IMG = p5context.loadImage(globalVars.PLAYER_IMG_ADR);
+    }
+
     p5context.setup = () => {
         globalVars.DEBUG = (new URLSearchParams(window.location.search)).has('debug');
         const startX = globalVars.DEBUG || localStorage.keybd === 'true' ? 0 : 340;
@@ -62,7 +68,7 @@ export default function initP5(p5context) {
         if (posesIt !== poses.length) {
             const { i: i1, j: j1 } = poses[posesIt - 1];
             const { i: i2, j: j2 } = poses[posesIt];
-            cells[i1][j1].highlight(p5context, 'red');
+            cells[i1][j1].highlight(p5context, globalVars.MINER_IMG);
             cells[i1][j1].vis = true;
             Cell.removeWalls(cells[i1][j1], cells[i2][j2]);
             posesIt++;

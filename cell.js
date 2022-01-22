@@ -9,12 +9,16 @@ export default class Cell {
         this.hasCoin = i && j && Math.random() < .25;
     }
 
-    highlight(p5context, color) {
+    highlight(p5context, texture) {
         const startX = this.j * globalVars.CELL_W;
         const startY = this.i * globalVars.CELL_H;
-        p5context.noStroke();
-        p5context.fill(color);
-        p5context.rect(startX, startY, globalVars.CELL_W - 3, globalVars.CELL_H - 5);
+        if (typeof texture === 'object') {
+            p5context.image(texture, startX, startY, globalVars.CELL_W, globalVars.CELL_H);
+        } else {
+            p5context.noStroke();
+            p5context.fill(texture);
+            p5context.rect(startX, startY, globalVars.CELL_W - 3, globalVars.CELL_H - 5);
+        }
     }
 
     draw(p5context) {
