@@ -1,3 +1,4 @@
+import 'https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/addons/p5.sound.min.js';
 import webgazer from "./libs/webgazer.js";
 import globalVars from "./globalVars.js";
 import Cell from "./cell.js";
@@ -16,12 +17,15 @@ let coins = 0;
 let monsters = new Array(3).fill(null);
 let eaten = false;
 let poses = [], posesIt = 1;
+let mazeSound;
 
 export default function initP5(p5context) {
     p5context.preload = () => {
         globalVars.MINER_IMG = p5context.loadImage(globalVars.MINER_IMG_ADR)
         globalVars.MONSTER_GIF = p5context.loadImage(globalVars.MONSTER_GIF_ADR);
         globalVars.PLAYER_IMG = p5context.loadImage(globalVars.PLAYER_IMG_ADR);
+
+        mazeSound = p5context.loadSound('sound/maze-sound.mp3');
     }
 
     p5context.setup = () => {
@@ -45,6 +49,8 @@ export default function initP5(p5context) {
         if (globalVars.n > 20) monsters[1] = new Monster(globalVars.n - 1, 0);
         if (globalVars.n > 25) monsters[2] = new Monster(globalVars.n - 1, globalVars.m - 1);
         poses = MazeMaker.genMaze(globalVars);
+
+        mazeSound.loop();
     }
     p5context.draw = async () => {
         //return;
@@ -147,6 +153,17 @@ export default function initP5(p5context) {
 
     p5context.keyPressed = () => {
         const canUseKb = localStorage.keybd === 'true' && !globalVars.DEBUG;
+
+        //press 'M'
+        if (p5context.keyCode === 77) {
+            if (mazeSound.isPlaying()) {
+                mazeSound.pause();
+            } else {
+                mazeSound.loop();
+            }
+            return;
+        }
+
         if (!canUseKb) {
             return;
         }
