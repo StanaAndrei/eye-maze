@@ -2,7 +2,7 @@ export default class Writer {
     static writeTime(p5context, timeElapsed) {
         p5context.textSize(25);
         p5context.fill(255, 255, 0, 180);
-        p5context.text(`time-elapsed:${timeElapsed}ms`,
+        p5context.text(`time-elapsed: ${timeElapsed}ms`,
             5, p5context.height - 10);
     }
 

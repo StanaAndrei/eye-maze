@@ -88,7 +88,7 @@ export default function initP5(p5context) {
                 monster?.draw(p5context, cells);
             }
             coins = player.updateCoinsLogic(cells, coins);
-            timeElapsed = startTime ? p5context.millis() - startTime - coins * 3e3 : 0;
+            timeElapsed = startTime ? p5context.millis() - startTime - coins * 1e3 : 0;
             timeElapsed = Math.max(timeElapsed, 0);
             for (let monster of monsters) {
                 if (monster && monster.i === player.i && monster.j === player.j) {
@@ -98,12 +98,12 @@ export default function initP5(p5context) {
                 }
             }
             if (player.i === globalVars.n - 1 && player.j === globalVars.m - 1) {
-                Writer.writeWon(p5context, timeElapsed);
+                Writer.writeWon(p5context, Math.trunc(timeElapsed));
                 p5context.noLoop();
                 return;
             }
         }
-        Writer.writeTime(p5context, timeElapsed);
+        Writer.writeTime(p5context, Math.trunc(timeElapsed));
         if (posesIt !== poses.length) {
             return;
         }
