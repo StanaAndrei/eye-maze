@@ -98,7 +98,8 @@ export default function initP5(p5context) {
                 }
             }
             if (player.i === globalVars.n - 1 && player.j === globalVars.m - 1) {
-                Writer.writeWon(p5context, Math.trunc(timeElapsed));
+                Writer.writeWon(p5context);
+                Writer.writeTime(p5context, Math.trunc(timeElapsed));
                 p5context.noLoop();
                 return;
             }
