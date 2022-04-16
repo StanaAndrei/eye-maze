@@ -10,8 +10,8 @@ export default {
     MONSTERS_UPDATE_INT: 55,
     //images
     MONSTER_GIF_ADR: './imgs/slime.gif',
-    PLAYER_IMG_ADR: './imgs/runner.gif',
-    MINER_IMG_ADR: './imgs/miner.jpg',
+    PLAYER_IMG_ADR: './imgs/still.gif',
+    MINER_IMG_ADR: './imgs/pickaxe.gif',
     MONSTER_GIF: null,
     PLAYER_IMG: null,
     MINER_IMG: null,
